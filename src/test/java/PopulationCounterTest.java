@@ -5,9 +5,14 @@
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.given;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +40,17 @@ public class PopulationCounterTest {
 
         // Teardown
         System.setOut(old);
+    }
+
+    @Test
+    public void testGetReadDataMethodofFileReaderClass() throws Exception{
+
+        FileReader fileReader = mock(FileReader.class);
+        given(fileReader.GetReadData()).willReturn(Arrays.asList("ad,aixas,Aixs,06,,42.4833333,1.4666667"));
+        fileReader.GetReadData();
+        then(fileReader).should(times(1)).GetReadData();
+        String line1 = fileReader.GetReadData().get(0);
+        assertEquals("ad,aixas,Aixs,06,,42.4833333,1.4666667",line1);
+        
     }
 }
